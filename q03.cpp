@@ -11,7 +11,7 @@ const ll B = 85LL;
 
 
 vector<int> get_input(string day) {
-    string file_path = "/i"+day+".in";
+    string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
     vector<int> arr;
@@ -60,7 +60,7 @@ void part3(vector<int>arr) {
 }
 
 int main() {
-    vector<int>arr = get_input("02");
+    vector<int>arr = get_input("03");
     part1(arr);
     part2(arr);
     part3(arr);

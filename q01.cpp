@@ -4,7 +4,7 @@
 using namespace std;
 
 pair<vector<int>, string> get_input(string day) {
-    string file_path = "i"+day+".in";
+    string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
     vector<int> arr;

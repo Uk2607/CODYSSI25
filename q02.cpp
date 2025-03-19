@@ -11,7 +11,7 @@ const ll B = 85LL;
 
 
 vector<int> get_input(string day) {
-    string file_path = "/i"+day+".in";
+    string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
     vector<int> arr;
