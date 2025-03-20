@@ -52,14 +52,47 @@ void part2(vector<vector<pair<int,int>>>arr) {
     cout<<"Part2:: "<<boxes<<"\n";
 }
 
+int get_num_of_unq_boxes(vector<pair<int,int>>a, vector<pair<int,int>>b) {
+    vector<pair<int,int>>c = {a[0], a[1], b[0], b[1]};
+    sort(c.begin(), c.end());
+    // Index of the last merged 
+    int resIdx = 0; 
+
+    for (int i = 1; i < c.size(); i++) {
+      
+        // If current interval overlaps with the 
+        // last merged interval
+        if (c[resIdx].second >= c[i].first)           
+            c[resIdx].second = max(c[resIdx].second, c[i].second);
+      
+        // Move to the next interval
+        else {            
+            resIdx++;
+            c[resIdx] = c[i];
+        }
+    }
+    vector<pair<int,int>>res;
+    for(int i=0;i<=resIdx;i++) res.push_back(c[i]);
+    int boxes = 0;
+    for(pair<int,int>p:res) boxes += (p.second-p.first+1);
+    return boxes;
+}
+
 void part3(vector<vector<pair<int,int>>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    int n = arr.size(), max_unq_boxes = 0;
+    for(int i=0;i<n-1;i++)
+        max_unq_boxes = max(max_unq_boxes, get_num_of_unq_boxes(arr[i], arr[i+1]));
+    cout<<"Part3:: "<<max_unq_boxes<<"\n";
 }
 
 int main() {
     vector<vector<pair<int,int>>>arr = get_input("03");
     part1(arr);
     part2(arr);
-    // part3(arr);
+    part3(arr);
     return 0;
 }
+
+// Part 1: 44270
+// Part 2: 36615
+// Part 3: 976
