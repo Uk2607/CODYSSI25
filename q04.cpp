@@ -24,11 +24,18 @@ vector<string> get_input(string day) {
     return arr;
 }
 
+int get_memory_size(string s) {
+    int memory = 0;
+    for(char c: s) {
+        if(c>='0' && c<='9') memory += (c-'0');
+        else memory += (c-'A'+1);
+    }
+    return memory;
+}
+
 void part1(vector<string>arr) {
     int memory = 0;
-    for(string line: arr)
-        for(char c: line)
-            memory += (c-'A'+1);
+    for(string line: arr) memory += get_memory_size(line);
     cout<<"Part1:: "<<memory<<"\n";
 }
 
@@ -37,11 +44,9 @@ void part2(vector<string>arr) {
     for(string line: arr) {
         int len = line.length();
         int ends_len = len/10;
+        
         string s = line.substr(0, ends_len) + to_string(len - (2*ends_len)) + line.substr(len-ends_len, ends_len);
-        for(char c: s) {
-            if(c>='0' && c<='9') memory += (c-'0'+1);
-            else memory += (c-'A'+1);
-        }
+        memory += get_memory_size(s);
     }
     cout<<"Part2:: "<<memory<<"\n";
 }
@@ -54,6 +59,6 @@ int main() {
     vector<string>arr = get_input("04");
     part1(arr);
     part2(arr);
-    // part3(arr);
+    part3(arr);
     return 0;
 }
