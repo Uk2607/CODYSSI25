@@ -44,15 +44,36 @@ void part2(vector<string>arr) {
     for(string line: arr) {
         int len = line.length();
         int ends_len = len/10;
-        
+
         string s = line.substr(0, ends_len) + to_string(len - (2*ends_len)) + line.substr(len-ends_len, ends_len);
         memory += get_memory_size(s);
     }
     cout<<"Part2:: "<<memory<<"\n";
 }
 
+string compress_str(string s) {
+    string res = "";
+    int x = 1, len = s.length();
+    char c = s[0];
+    for(int i=1;i<len;i++) {
+        if(c==s[i]) x++;
+        else {
+            res += to_string(x)+c;
+            c = s[i];
+            x=1;
+        }
+    }
+    res += to_string(x)+c;
+    return res;
+}
+
 void part3(vector<string>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    int memory = 0;
+    for(string line: arr) {
+        string str = compress_str(line);
+        memory += get_memory_size(str);
+    }
+    cout<<"Part3:: "<<memory<<"\n";
 }
 
 int main() {
