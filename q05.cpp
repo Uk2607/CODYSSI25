@@ -2,6 +2,7 @@
 #include<fstream>
 #include<sstream>
 #include<string>
+#include<set>
 using namespace std;
 
 #define ll long long
@@ -71,7 +72,24 @@ void part2(vector<pair<int,int>>arr) {
 }
 
 void part3(vector<pair<int,int>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    set<pair<int,int>>vis(arr.begin(), arr.end());
+    int total_dist = 0;
+    pair<int,int>me = {0, 0};
+    while(!vis.empty()) {
+        int mn = INT_MAX;
+        pair<int,int>closest;
+        for(pair<int,int>p: vis) {
+            int dist = abs(p.first-me.first)+abs(p.second-me.second);
+            if(dist<mn) {
+                mn = dist;
+                closest = p;
+            }
+        }
+        total_dist += mn;
+        vis.erase(closest);
+        me = closest;
+    }
+    cout<<"Part3:: "<<total_dist<<"\n";
 }
 
 int main() {
@@ -81,3 +99,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 608
+// Part 2: 106
+// Part 3: 6535
