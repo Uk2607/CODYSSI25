@@ -24,11 +24,23 @@ string get_input(string day) {
 }
 
 void part1(string str) {
-    cout<<"Part1:: "<<""<<"\n";
+    int valid_data = 0;
+    for(char c: str) {
+        if((c>='a' && c<='z') || (c>='A' && c<='Z')) valid_data++;
+    }
+    cout<<"Part1:: "<<valid_data<<"\n";
 }
 
 void part2(string str) {
-    cout<<"Part2:: "<<""<<"\n";
+    int valid_data = 0;
+    for(char c: str) {
+        if(c>='a' && c<='z') {
+            valid_data += (c-'a'+1);
+        } else if (c>='A' && c<='Z') {
+            valid_data += (c-'A'+27);
+        }
+    }
+    cout<<"Part2:: "<<valid_data<<"\n";
 }
 
 void part3(string str) {
