@@ -5,38 +5,39 @@
 using namespace std;
 
 
-vector<int> get_input(string day) {
+vector<pair<string,int>> get_input(string day) {
     string file_path = "2024/"+day+".in";
     ifstream file(file_path);
 
-    vector<int>arr;
+    vector<pair<string,int>>arr;
     string line;
+    int base;
 
     if (!file.is_open()) {
         cerr << "Failed to open file: " << file_path << endl;
         return arr;
     }
-    while(getline(file, line)) {
-        arr.push_back(stoi(line));
+    while(file>>line>>base) {
+        arr.push_back({line, base});
     }
     file.close();
     return arr;
 }
 
-void part1(vector<int>arr) {
+void part1(vector<pair<string,int>>arr) {
     cout<<"Part1:: "<<""<<"\n";
 }
 
-void part2(vector<int>arr) {
+void part2(vector<pair<string,int>>arr) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(vector<int>arr) {
+void part3(vector<pair<string,int>>arr) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<int>arr = get_input("03");
+    vector<pair<string,int>>arr = get_input("03");
     part1(arr);
     part2(arr);
     part3(arr);
