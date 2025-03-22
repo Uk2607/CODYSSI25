@@ -5,36 +5,40 @@
 using namespace std;
 
 
-string get_input(string day) {
+vector<int> get_input(string day) {
     string file_path = "2024/"+day+".in";
     ifstream file(file_path);
+
+    vector<int>arr;
     string line;
 
     if (!file.is_open()) {
         cerr << "Failed to open file: " << file_path << endl;
-        return "";
+        return arr;
     }
-    getline(file, line);
+    while(getline(file, line)) {
+        arr.push_back(stoi(line));
+    }
     file.close();
-    return line;
+    return arr;
 }
 
-void part1(string str) {
+void part1(vector<int>arr) {
     cout<<"Part1:: "<<""<<"\n";
 }
 
-void part2(string str) {
+void part2(vector<int>arr) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(string str) {
+void part3(vector<int>arr) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    string str = get_input("01");
-    part1(str);
-    part2(str);
-    part3(str);
+    vector<int>arr = get_input("01");
+    part1(arr);
+    part2(arr);
+    part3(arr);
     return 0;
 }
