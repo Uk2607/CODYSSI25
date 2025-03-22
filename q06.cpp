@@ -5,7 +5,6 @@
 using namespace std;
 
 
-
 string get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
