@@ -81,12 +81,13 @@ void part3(vector<pair<string,string>>arr) {
     q.push(start);
     int limit = 3, idx=0;
 
-    while(vis.size()!=mp.size()) {
+    while(vis.size()!=mp.size()) { // vis.size()!=mp.size()  or   !q.empty()
         int n = q.size();
         while(n--) {
             string curr = q.front();
-            time[curr] = idx;
             q.pop();
+            if(vis.find(curr) != vis.end()) continue;
+            time[curr] = idx;
             vis.insert(curr);
             for(string v: mp[curr]) {
                 if(vis.find(v)==vis.end())
@@ -96,11 +97,8 @@ void part3(vector<pair<string,string>>arr) {
         idx++;
     }
     int total = 0;
-    for(auto [pos, t]: time) {
-        cout<<pos<<": "<<t<<"\n";
-        total += t;
-    }
-    cout<<"Part3:: "<<total<<"\n";  // != 198
+    for(auto [pos, t]: time) total += t;
+    cout<<"Part3:: "<<total<<"\n";
 }
 
 int main() {
@@ -110,3 +108,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 47
+// Part 2: 18
+// Part 3: 174
