@@ -31,13 +31,24 @@ void part1(vector<pair<string,int>>arr) {
 }
 
 int to_base10(string num, int base) {
-    return 0;
+    if(base==10) return stoi(num);
+    int n = num.length(), x = 0, mult = 0, i = n-1;
+    while(i>=0) {
+        int b = (num[i]>='0' && num[i]<='9')?num[i]-'0':num[i]-'A'+10;
+        x += (b*pow(base, mult));
+        mult++;
+        i--;
+    }
+    return x;
 }
 
 void part2(vector<pair<string,int>>arr) {
-    int sum = 0;
-    for(pair<string,int>p: arr)
-        sum += to_base10(p.first, p.second);
+    long long sum = 0;
+    for(pair<string,int>p: arr) {
+        int x = to_base10(p.first, p.second);
+        cout<<p.first<<" "<<p.second<<" : "<<x<<"\n";
+        sum += x;
+    }
     cout<<"Part2:: "<<sum<<"\n";
 }
 
