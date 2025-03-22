@@ -50,7 +50,6 @@ void part3(vector<bool>arr) {
     while(arr.size()>0) {
         vector<bool>t;
         bool flag = true;
-        cout<<arr.size()<<" ";
         for(int i=0;i<arr.size()-1;i+=2) {
             bool c;
             total+=(arr[i]+arr[i+1]);
@@ -59,6 +58,7 @@ void part3(vector<bool>arr) {
             t.push_back(c);
             flag = !flag;
         }
+        if(arr.size()==1 && arr[0]==1) total++;
         arr = t;
     }
     cout<<"Part3:: "<<total<<"\n";
