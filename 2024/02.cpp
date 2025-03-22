@@ -50,30 +50,19 @@ void part3(vector<bool>arr) {
     while(arr.size()>0) {
         vector<bool>t;
         bool flag = true;
-        for(bool x: arr) cout<<x<<" "; cout<<"\n";
-        for(int i=0;i<arr.size()-1;i++) {
+        cout<<arr.size()<<" ";
+        for(int i=0;i<arr.size()-1;i+=2) {
             bool c;
-            if(arr[i]) total++;
-            if(arr[i+1]) total++;
+            total+=(arr[i]+arr[i+1]);
             if(flag) c = arr[i]&arr[i+1];
             else c = arr[i]|arr[i+1];
             t.push_back(c);
             flag = !flag;
-            i++;
         }
         arr = t;
     }
     cout<<"Part3:: "<<total<<"\n";
 }
-
-// T
-// F   F
-// T
-// F   T   F
-// F
-// F   F
-// T
-// T   T   T   F
 
 int main() {
     vector<bool>arr = get_input("02");
@@ -82,3 +71,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 86712
+// Part 2: 172
+// Part 3: 676
