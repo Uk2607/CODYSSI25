@@ -44,16 +44,39 @@ int to_base10(string num, int base) {
 
 void part2(vector<pair<string,int>>arr) {
     long long sum = 0;
-    for(pair<string,int>p: arr) {
-        int x = to_base10(p.first, p.second);
-        cout<<p.first<<" "<<p.second<<" : "<<x<<"\n";
-        sum += x;
-    }
+    for(pair<string,int>p: arr)
+        sum += to_base10(p.first, p.second);
     cout<<"Part2:: "<<sum<<"\n";
 }
 
+char get_base_65_char(int n) {
+    if(n>=0 && n<10) return '0'+n;
+    else if(n<36) return n-10+'A';
+    else if(n<62) return n-36+'a';
+    else if(n==62) return '!';
+    else if(n==63) return '@';
+    else return '#';
+}
+
+string bas10_to_base65(long long num) {
+    string res = "";
+
+    while(num>0) {
+        int r = num%65;
+        char c = get_base_65_char(r);
+        res = c+res;
+        num /= 65LL;
+    }
+
+    return res;
+}
+
 void part3(vector<pair<string,int>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    long long sum = 0;
+    for(pair<string,int>p: arr)
+        sum += to_base10(p.first, p.second);
+    string base65 = bas10_to_base65(sum);
+    cout<<"Part3:: "<<base65<<"\n";
 }
 
 int main() {
@@ -63,3 +86,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 7122
+// Part 2: 410358142199
+// Part 3: 5ShT2Wi
