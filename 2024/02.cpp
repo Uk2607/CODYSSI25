@@ -5,11 +5,11 @@
 using namespace std;
 
 
-vector<int> get_input(string day) {
+vector<bool> get_input(string day) {
     string file_path = "2024/"+day+".in";
     ifstream file(file_path);
 
-    vector<int>arr;
+    vector<bool>arr;
     string line;
 
     if (!file.is_open()) {
@@ -17,26 +17,66 @@ vector<int> get_input(string day) {
         return arr;
     }
     while(getline(file, line)) {
-        arr.push_back(stoi(line));
+        if(line == "TRUE") arr.push_back(true);
+        else arr.push_back(false);
     }
     file.close();
     return arr;
 }
 
-void part1(vector<int>arr) {
-    cout<<"Part1:: "<<""<<"\n";
+void part1(vector<bool>arr) {
+    int total = 0;
+    for(int i=0;i<arr.size();i++)
+        if(arr[i])
+            total+=(i+1);
+    cout<<"Part1:: "<<total<<"\n";
 }
 
-void part2(vector<int>arr) {
-    cout<<"Part2:: "<<""<<"\n";
+void part2(vector<bool>arr) {
+    int total = 0;
+    bool flag = true;
+    for(int i=0;i<arr.size();i+=2) {
+        bool c;
+        if(flag) c = arr[i]&arr[i+1];
+        else c = arr[i]|arr[i+1];
+        if(c) total++;
+        flag = !flag;
+    }
+    cout<<"Part2:: "<<total<<"\n";
 }
 
-void part3(vector<int>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+void part3(vector<bool>arr) {
+    int total = 0;
+    while(arr.size()>0) {
+        vector<bool>t;
+        bool flag = true;
+        for(bool x: arr) cout<<x<<" "; cout<<"\n";
+        for(int i=0;i<arr.size()-1;i++) {
+            bool c;
+            if(arr[i]) total++;
+            if(arr[i+1]) total++;
+            if(flag) c = arr[i]&arr[i+1];
+            else c = arr[i]|arr[i+1];
+            t.push_back(c);
+            flag = !flag;
+            i++;
+        }
+        arr = t;
+    }
+    cout<<"Part3:: "<<total<<"\n";
 }
+
+// T
+// F   F
+// T
+// F   T   F
+// F
+// F   F
+// T
+// T   T   T   F
 
 int main() {
-    vector<int>arr = get_input("01");
+    vector<bool>arr = get_input("02");
     part1(arr);
     part2(arr);
     part3(arr);

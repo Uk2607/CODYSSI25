@@ -36,7 +36,7 @@ void part3(vector<int>arr) {
 }
 
 int main() {
-    vector<int>arr = get_input("01");
+    vector<int>arr = get_input("03");
     part1(arr);
     part2(arr);
     part3(arr);
