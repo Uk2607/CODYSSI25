@@ -68,7 +68,39 @@ void part2(vector<pair<string,string>>arr) {
 }
 
 void part3(vector<pair<string,string>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    map<string, vector<string>>mp;
+    map<string,int>time;
+    for(auto [src, dest]: arr) {
+        mp[src].push_back(dest);
+        mp[dest].push_back(src);
+    }
+    set<string>vis;
+    queue<string>q;
+
+    string start = "STT";
+    q.push(start);
+    int limit = 3, idx=0;
+
+    while(vis.size()!=mp.size()) {
+        int n = q.size();
+        while(n--) {
+            string curr = q.front();
+            time[curr] = idx;
+            q.pop();
+            vis.insert(curr);
+            for(string v: mp[curr]) {
+                if(vis.find(v)==vis.end())
+                    q.push(v);
+            }
+        }
+        idx++;
+    }
+    int total = 0;
+    for(auto [pos, t]: time) {
+        cout<<pos<<": "<<t<<"\n";
+        total += t;
+    }
+    cout<<"Part3:: "<<total<<"\n";  // != 198
 }
 
 int main() {
