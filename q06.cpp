@@ -9,44 +9,36 @@ using namespace std;
 #define ull unsigned long long
 
 
-vector<pair<int,int>> get_input(string day) {
+string get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
-
-    vector<pair<int,int>>arr;
     string line;
 
     if (!file.is_open()) {
         cerr << "Failed to open file: " << file_path << endl;
-        return arr;
+        return "";
     }
-    while(getline(file, line)) {
-        int idx = -1, n = line.length();
-        for(int i=0;i<n;i++) if(line[i]==',') {idx = i; break;}
-        int x = stoi(line.substr(1, idx-1));
-        int y = stoi(line.substr(idx+2, n-idx-3));
-        arr.push_back({x, y});
-    }
+    getline(file, line);
     file.close();
-    return arr;
+    return line;
 }
 
-void part1(vector<pair<int,int>>arr) {
+void part1(string str) {
     cout<<"Part1:: "<<""<<"\n";
 }
 
-void part2(vector<pair<int,int>>arr) {
+void part2(string str) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(vector<pair<int,int>>arr) {
+void part3(string str) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<pair<int,int>>arr = get_input("06");
-    part1(arr);
-    part2(arr);
-    part3(arr);
+    string str = get_input("06");
+    part1(str);
+    part2(str);
+    part3(str);
     return 0;
 }
