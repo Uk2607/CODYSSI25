@@ -10,26 +10,35 @@ vector<pair<string,int>> get_input(string day) {
     ifstream file(file_path);
 
     vector<pair<string,int>>arr;
-    string line;
+    string num;
     int base;
 
     if (!file.is_open()) {
         cerr << "Failed to open file: " << file_path << endl;
         return arr;
     }
-    while(file>>line>>base) {
-        arr.push_back({line, base});
+    while(file>>num>>base) {
+        arr.push_back({num, base});
     }
     file.close();
     return arr;
 }
 
 void part1(vector<pair<string,int>>arr) {
-    cout<<"Part1:: "<<""<<"\n";
+    int sum = 0;
+    for(pair<string,int>p: arr) sum += p.second;
+    cout<<"Part1:: "<<sum<<"\n";
+}
+
+int to_base10(string num, int base) {
+    return 0;
 }
 
 void part2(vector<pair<string,int>>arr) {
-    cout<<"Part2:: "<<""<<"\n";
+    int sum = 0;
+    for(pair<string,int>p: arr)
+        sum += to_base10(p.first, p.second);
+    cout<<"Part2:: "<<sum<<"\n";
 }
 
 void part3(vector<pair<string,int>>arr) {
