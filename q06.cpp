@@ -2,11 +2,8 @@
 #include<fstream>
 #include<sstream>
 #include<string>
-#include<set>
 using namespace std;
 
-#define ll long long
-#define ull unsigned long long
 
 
 string get_input(string day) {
