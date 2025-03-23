@@ -46,7 +46,12 @@ void part1(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
 }
 
 void part2(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
-    cout<<"Part2:: "<<""<<"\n";
+    int n = ops.size();
+    for(int i=0;i<n;i++) {
+        swap(arr[ops[i].first-1], arr[ops[i].second-1]);
+        swap(arr[ops[i].first-1], arr[ops[(i+1)%n].first-1]);
+    }
+    cout<<"Part2:: "<<arr[test_idx-1]<<"\n";
 }
 
 void part3(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
