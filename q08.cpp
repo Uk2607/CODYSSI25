@@ -40,27 +40,15 @@ pair<pair<vector<int>, vector<pair<int,int>>>,int> get_input(string day) {
 }
 
 void part1(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
-    for(pair<int,int>p: ops)
-        swap(arr[p.first-1], arr[p.second-1]);
-    cout<<"Part1:: "<<arr[test_idx-1]<<"\n";
+    cout<<"Part1:: "<<""<<"\n";
 }
 
 void part2(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
-    int n = ops.size();
-    for(int i=0;i<n;i++) {
-        swap(arr[ops[i].first-1], arr[ops[i].second-1]);
-        swap(arr[ops[i].first-1], arr[ops[(i+1)%n].first-1]);
-    }
-    cout<<"Part2:: "<<arr[test_idx-1]<<"\n";
+    cout<<"Part2:: "<<""<<"\n";
 }
 
 void part3(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
-    int n = arr.size(); 
-    for(auto [a, b]: ops) {
-        int l = min(a, b)-1, r = max(a, b)-1, len = min(r-l, n-r);
-        while(len--) swap(arr[l++], arr[r++]);
-    }
-    cout<<"Part3:: "<<arr[test_idx-1]<<"\n";
+    cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
