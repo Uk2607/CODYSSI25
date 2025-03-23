@@ -57,10 +57,8 @@ void part2(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
 void part3(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
     int n = arr.size(); 
     for(auto [a, b]: ops) {
-        int l = min(a, b), r = max(a, b), len = min(r-l, n-r+1);
-        while(len--) {
-            swap(arr[l++], arr[r++]);
-        }
+        int l = min(a, b)-1, r = max(a, b)-1, len = min(r-l, n-r);
+        while(len--) swap(arr[l++], arr[r++]);
     }
     cout<<"Part3:: "<<arr[test_idx-1]<<"\n";
 }
@@ -72,3 +70,7 @@ int main() {
     part3(ip.first.first, ip.first.second, ip.second);
     return 0;
 }
+
+// Part 1: 22971
+// Part 2: 19486
+// Part 3: 12901
