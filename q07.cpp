@@ -8,48 +8,54 @@ using namespace std;
 #define ull unsigned long long
 
 
-vector<vector<pair<int,int>>> get_input(string day) {
+pair<pair<vector<int>, vector<pair<int,int>>>,int> get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
-    vector<vector<pair<int,int>>>arr;
+    vector<int>arr;
+    vector<pair<int,int>>ops;
+    int test;
     string line;
 
     if (!file.is_open()) {
         cerr << "Failed to open file: " << file_path << endl;
-        return arr;
+        return {{arr, ops}, test};
     }
+    int t=0;
     while(getline(file, line)) {
-        stringstream ss(line);
-        string range;
-        vector<int>row;
-        while(getline(ss, range, ' ')) {
-            stringstream ssv(range);
-            string v;
-            while(getline(ssv, v, '-')) row.push_back(stoi(v));
+        cout<<t<<" ";
+        if(line.length()==0) {
+            t++;
+            continue;
         }
-        arr.push_back({{row[0], row[1]}, {row[2], row[3]}});
+        if(t==0) arr.push_back(stoi(line));
+        else if(t==1) {
+            int idx;
+            for(int i=0;i<line.length();i++) if(line[i]=='-') {idx=i; break;}
+            ops.push_back({stoi(line.substr(0, idx)), stoi(line.substr(idx+1))});
+        }
+        else if(t==2) test = stoi(line);
     }
     file.close();
-    return arr;
+    return {{arr, ops}, test};
 }
 
-void part1(vector<vector<pair<int,int>>>arr) {
+void part1(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
     cout<<"Part1:: "<<""<<"\n";
 }
 
-void part2(vector<vector<pair<int,int>>>arr) {
+void part2(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(vector<vector<pair<int,int>>>arr) {
+void part3(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<vector<pair<int,int>>>arr = get_input("07");
-    part1(arr);
-    part2(arr);
-    part3(arr);
+    pair<pair<vector<int>, vector<pair<int,int>>>,int>ip = get_input("07");
+    part1(ip.first.first, ip.first.second, ip.second);
+    part2(ip.first.first, ip.first.second, ip.second);
+    part3(ip.first.first, ip.first.second, ip.second);
     return 0;
 }
