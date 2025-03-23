@@ -83,3 +83,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 135056
+// Part 2: 27026
+// Part 3: 45359
