@@ -23,7 +23,6 @@ pair<pair<vector<int>, vector<pair<int,int>>>,int> get_input(string day) {
     }
     int t=0;
     while(getline(file, line)) {
-        cout<<t<<" ";
         if(line.length()==0) {
             t++;
             continue;
@@ -41,7 +40,9 @@ pair<pair<vector<int>, vector<pair<int,int>>>,int> get_input(string day) {
 }
 
 void part1(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
-    cout<<"Part1:: "<<""<<"\n";
+    for(pair<int,int>p: ops)
+        swap(arr[p.first-1], arr[p.second-1]);
+    cout<<"Part1:: "<<arr[test_idx-1]<<"\n";
 }
 
 void part2(vector<int>arr, vector<pair<int,int>>ops, int test_idx) {
