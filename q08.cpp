@@ -8,11 +8,11 @@ using namespace std;
 #define ull unsigned long long
 
 
-vector<int> get_input(string day) {
+vector<string> get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
-    vector<int>arr;
+    vector<string>arr;
     string line;
 
     if (!file.is_open()) {
@@ -20,26 +20,63 @@ vector<int> get_input(string day) {
         return arr;
     }
     while(getline(file, line)) {
-        arr.push_back(stoi(line));
+        arr.push_back(line);
     }
     file.close();
     return arr;
 }
 
-void part1(vector<int>arr) {
-    cout<<"Part1:: "<<""<<"\n";
+void part1(vector<string>arr) {
+    int cnt = 0;
+    for(string row: arr) {
+        for(char c: row) {
+            if(c>='a' && c<='z') cnt++;
+        }
+    }
+    cout<<"Part1:: "<<cnt<<"\n";
 }
 
-void part2(vector<int>arr) {
-    cout<<"Part2:: "<<""<<"\n";
+bool is_digit(char c) {
+    return c>='0' && c<='9';
 }
 
-void part3(vector<int>arr) {
+string reduce_str(string str) {
+    string res = "";
+    while(true) {
+        for(char c: str) {
+            if(res.length()==0) res+=c;
+            else {
+                if(is_digit(c)) {
+                    if(!is_digit(res.back())) res.pop_back();
+                } else {
+                    if(is_digit(res.back())) res.pop_back();
+                }
+            }
+        }
+        if(str == res) break;
+        str = res;
+        res = "";
+    }
+    return res;
+}
+
+void part2(vector<string>arr) {
+    int cnt = 0;
+    for(string row: arr) {
+        string reduced = reduce_str(row);
+        for(char c: reduced) {
+            if(c>='a' && c<='z') cnt++;
+        }
+    }
+    cout<<"Part2:: "<<cnt<<"\n";
+}
+
+void part3(vector<string>arr) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<int>arr = get_input("08");
+    vector<string>arr = get_input("08");
     part1(arr);
     part2(arr);
     part3(arr);
