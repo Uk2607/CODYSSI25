@@ -39,8 +39,11 @@ void part1(vector<string>arr) {
 bool is_digit(char c) {
     return c>='0' && c<='9';
 }
+bool is_alpha(char c) {
+    return c>='a' && c<='z';
+}
 
-string reduce_str(string str) {
+string reduce_str1(string str) {
     string res = "";
     while(true) {
         for(char c: str) {
@@ -65,14 +68,36 @@ string reduce_str(string str) {
 void part2(vector<string>arr) {
     int cnt = 0;
     for(string row: arr) {
-        string reduced = reduce_str(row);
+        string reduced = reduce_str1(row);
         cnt += reduced.length();
     }
     cout<<"Part2:: "<<cnt<<"\n";
 }
 
+string reduce_str2(string str) {
+    string res = "";
+    while(true) {
+        for(char c: str) {
+            if(res.length()==0) res+=c;
+            else {
+                if((is_digit(c) && is_alpha(res.back())) || (is_digit(res.back()) && is_alpha(c))) res.pop_back();
+                else res+=c;
+            }
+        }
+        if(str == res) break;
+        str = res;
+        res = "";
+    }
+    return res;
+}
+
 void part3(vector<string>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    int cnt = 0;
+    for(string row: arr) {
+        string reduced = reduce_str2(row);
+        cnt += reduced.length();
+    }
+    cout<<"Part3:: "<<cnt<<"\n";
 }
 
 int main() {
@@ -83,6 +108,6 @@ int main() {
     return 0;
 }
 
-// Part 1: 22971
-// Part 2: 19486
-// Part 3: 12901
+// Part 1: 4704
+// Part 2: 686
+// Part 3: 1306
