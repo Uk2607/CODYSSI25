@@ -48,8 +48,10 @@ string reduce_str(string str) {
             else {
                 if(is_digit(c)) {
                     if(!is_digit(res.back())) res.pop_back();
+                    else res+=c;
                 } else {
                     if(is_digit(res.back())) res.pop_back();
+                    else res+=c;
                 }
             }
         }
@@ -64,9 +66,7 @@ void part2(vector<string>arr) {
     int cnt = 0;
     for(string row: arr) {
         string reduced = reduce_str(row);
-        for(char c: reduced) {
-            if(c>='a' && c<='z') cnt++;
-        }
+        cnt += reduced.length();
     }
     cout<<"Part2:: "<<cnt<<"\n";
 }
