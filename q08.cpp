@@ -49,13 +49,8 @@ string reduce_str1(string str) {
         for(char c: str) {
             if(res.length()==0) res+=c;
             else {
-                if(is_digit(c)) {
-                    if(!is_digit(res.back())) res.pop_back();
-                    else res+=c;
-                } else {
-                    if(is_digit(res.back())) res.pop_back();
-                    else res+=c;
-                }
+                if((is_digit(c) && !is_digit(res.back())) || (is_digit(res.back()) && !is_digit(c))) res.pop_back();
+                else res+=c;
             }
         }
         if(str == res) break;
