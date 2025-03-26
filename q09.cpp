@@ -65,7 +65,19 @@ void part1(map<string, int> balance, vector<pair<pair<string,string>, int>> tran
 }
 
 void part2(map<string, int> balance, vector<pair<pair<string,string>, int>> transactions) {
-    cout<<"Part2:: "<<""<<"\n";
+    for(pair<pair<string, string>, int> transaction: transactions) {
+        string sender = transaction.first.first;
+        string reciever = transaction.first.second;
+        int amount = min(balance[sender], transaction.second);
+        balance[sender] -= amount;
+        balance[reciever] += amount;
+    }
+    vector<int>res;
+    for(auto it: balance) res.push_back(it.second);
+    
+    int top_3_sum = get_top_3_sum(res);
+
+    cout<<"Part2:: "<<top_3_sum<<"\n";
 }
 
 void part3(map<string, int> balance, vector<pair<pair<string,string>, int>> transactions) {
