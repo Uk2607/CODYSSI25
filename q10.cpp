@@ -49,12 +49,33 @@ void part1(vector<vector<int>>arr) {
     cout<<"Part1:: "<<mn<<"\n";
 }
 
+int min_cost_path(vector<vector<int>>&arr, pair<int,int>me, pair<int,int>dest) {
+    int r = arr.size(), c = arr[0].size();
+    if(me.first>=r || me.second>=c || dest.first>=r || dest.second>=c) return -1;
+    vector<vector<int>>dp(r, vector<int>(c, INT_MAX));
+    for(int i=me.first;i<=dest.first;i++) {
+        for(int j=me.second;j<=dest.second;j++) {
+            if(i==me.first && j==me.second) {
+                dp[i][j] = arr[i][j];
+                continue;
+            }
+            if(i>me.first) dp[i][j] = min(dp[i][j], dp[i-1][j]+arr[i][j]);
+            if(j>me.second) dp[i][j] = min(dp[i][j], dp[i][j-1]+arr[i][j]);
+        }
+    }
+    return dp[dest.first][dest.second];
+} 
+
 void part2(vector<vector<int>>arr) {
-    cout<<"Part2:: "<<""<<"\n";
+    pair<int,int>me = {0, 0}, dest = {14, 14};
+    int min_cost = min_cost_path(arr, me, dest);
+    cout<<"Part2:: "<<min_cost<<"\n";
 }
 
 void part3(vector<vector<int>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    pair<int,int>me = {0, 0}, dest = {49, 49};
+    int min_cost = min_cost_path(arr, me, dest);
+    cout<<"Part3:: "<<min_cost<<"\n";
 }
 
 int main() {
