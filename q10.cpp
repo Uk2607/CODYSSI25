@@ -39,13 +39,13 @@ void part3(vector<string>arr) {
 }
 
 int main() {
-    vector<string>arr = get_input("09");
+    vector<string>arr = get_input("10");
     part1(arr);
     part2(arr);
     part3(arr);
     return 0;
 }
 
-// Part 1: 9891
-// Part 2: 6287
-// Part 3: 6181
+// Part 1: 208
+// Part 2: 109
+// Part 3: 302
