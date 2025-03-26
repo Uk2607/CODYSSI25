@@ -81,7 +81,45 @@ void part2(map<string, int> balance, vector<pair<pair<string,string>, int>> tran
 }
 
 void part3(map<string, int> balance, vector<pair<pair<string,string>, int>> transactions) {
-    cout<<"Part3:: "<<""<<"\n";
+    map<string, vector<pair<string,int>>>debt_mp;
+    for(pair<pair<string, string>, int> transaction: transactions) {
+        string sender = transaction.first.first;
+        string reciever = transaction.first.second;
+        int amount = transaction.second;
+
+        if(amount<=balance[sender]) {
+            balance[sender] -= amount;
+            balance[reciever] += amount;
+        } else {
+            int debt = amount-balance[sender];
+            balance[reciever] += balance[sender];
+            balance[sender] = 0;
+            debt_mp[sender].push_back({reciever, debt});
+        }
+        for(auto &it: balance) {
+            string sen = it.first;
+            while(it.second>0 && debt_mp[sen].size()!=0) {
+                string rec = debt_mp[sen][0].first;
+                int debt_amt = debt_mp[sen][0].second;
+                if(it.second>=debt_amt) {
+                    balance[sen] -= debt_amt;
+                    balance[rec] += debt_amt;
+                    debt_mp[sen].erase(debt_mp[sen].begin());
+                } else {
+                    balance[rec]+= balance[sen];
+                    debt_mp[sen][0].second = debt_amt-balance[sen];
+                    balance[sen] = 0;
+                }
+            }
+        }
+    }
+
+    vector<int>res;
+    for(auto it: balance) res.push_back(it.second);
+    
+    int top_3_sum = get_top_3_sum(res);
+
+    cout<<"Part3:: "<<top_3_sum<<"\n";
 }
 
 int main() {
