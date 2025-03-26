@@ -8,11 +8,11 @@ using namespace std;
 #define ull unsigned long long
 
 
-vector<string> get_input(string day) {
+vector<vector<int>> get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
-    vector<string>arr;
+    vector<vector<int>>arr;
     string line;
 
     if (!file.is_open()) {
@@ -20,26 +20,45 @@ vector<string> get_input(string day) {
         return arr;
     }
     while(getline(file, line)) {
-        arr.push_back(line);
+        vector<int>row;
+        stringstream ss(line);
+        int num;
+        while(ss>>num) row.push_back(num);
+        arr.push_back(row);
     }
     file.close();
     return arr;
 }
 
-void part1(vector<string>arr) {
-    cout<<"Part1:: "<<""<<"\n";
+void part1(vector<vector<int>>arr) {
+    int r = arr.size(), c = arr[0].size();    
+    vector<int> rowSums(r, 0), colSums(c, 0);
+
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++) {
+            rowSums[i] += arr[i][j];
+            colSums[j] += arr[i][j];
+        }
+    
+    int mn = INT_MAX;
+    for (int sum : rowSums)
+        if (sum < mn) mn = sum;
+    for (int sum : colSums)
+        if (sum < mn) mn = sum;
+    
+    cout<<"Part1:: "<<mn<<"\n";
 }
 
-void part2(vector<string>arr) {
+void part2(vector<vector<int>>arr) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(vector<string>arr) {
+void part3(vector<vector<int>>arr) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<string>arr = get_input("10");
+    vector<vector<int>>arr = get_input("10");
     part1(arr);
     part2(arr);
     part3(arr);
