@@ -52,11 +52,8 @@ ll to_base10(string num, int base) {
 
 void part1(vector<pair<string, int>>arr) {
     ll mx = LLONG_MIN;
-    for(auto [num, base]: arr) {
-        ll x = to_base10(num, base);
-        mx = max(mx, x);
-    }
-    cout<<"Part1:: "<<mx<<"\n";  // 2142537924
+    for(auto [num, base]: arr) mx = max(mx, to_base10(num, base));
+    cout<<"Part1:: "<<mx<<"\n";
 }
 
 char get_base_68_char(int n) {
@@ -86,20 +83,15 @@ string bas10_to_base68(long long num) {
 
 void part2(vector<pair<string, int>>arr) {
     ll sum = 0LL;
-    for(auto [num, base]: arr)
-        sum += to_base10(num, base);
-    string base68 = bas10_to_base68(sum);
-    cout<<"Part2:: "<<base68<<"\n";  // 5EQHr1v#E
+    for(auto [num, base]: arr) sum += to_base10(num, base);
+    cout<<"Part2:: "<<bas10_to_base68(sum)<<"\n";
 }
 
 void part3(vector<pair<string, int>>arr) {
-    int base_length = 4;
+    int base_length = 4, base = 2;
     ll sum = 0LL;
-    for(auto [num, base]: arr)
-        sum += to_base10(num, base);
-    int base = 2;
-    while (pow(base, 4) <= sum)
-        base++;
+    for(auto [num, base]: arr) sum += to_base10(num, base);
+    while (pow(base, base_length) <= sum) base++;
     cout<<"Part3:: "<<base<<"\n";
 }
 
