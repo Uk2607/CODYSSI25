@@ -90,7 +90,6 @@ void part2(vector<pair<string, int>>arr) {
         ll x = to_base10(num, base);
         sum += x;
     }
-    cout<<sum<<"\n";
     string base68 = bas10_to_base68(sum);
     cout<<"Part2:: "<<base68<<"\n";  // 5EQHr1v#E
 }
