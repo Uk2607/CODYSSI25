@@ -42,7 +42,7 @@ ll to_base10(string num, int base) {
     int n = num.length(), mult = 0, i = n-1;
     ll x = 0LL;
     while(i>=0) {
-        int b = (num[i]>='0' && num[i]<='9')?num[i]-'0':num[i]-'A'+10;
+        int b = get_numeric_val(num[i]);
         x += (b*pow(base, mult));
         mult++;
         i--;
@@ -54,7 +54,6 @@ void part1(vector<pair<string, int>>arr) {
     ll mx = LLONG_MIN;
     for(auto [num, base]: arr) {
         ll x = to_base10(num, base);
-        cout<<x<<"\n";
         mx = max(mx, x);
     }
     cout<<"Part1:: "<<mx<<"\n";  // 2142537924
@@ -69,18 +68,17 @@ char get_base_68_char(int n) {
     else if(n==64) return '#';
     else if(n==65) return '$';
     else if(n==66) return '%';
-    else if(n==67) return '^';
-    else return '#';
+    else return '^';
 }
 
 string bas10_to_base68(long long num) {
+    ll base = 68;
     string res = "";
-
     while(num>0) {
-        int r = num%65;
+        int r = num%base;
         char c = get_base_68_char(r);
         res = c+res;
-        num /= 68LL;
+        num /= base;
     }
 
     return res;
@@ -92,8 +90,9 @@ void part2(vector<pair<string, int>>arr) {
         ll x = to_base10(num, base);
         sum += x;
     }
+    cout<<sum<<"\n";
     string base68 = bas10_to_base68(sum);
-    cout<<"Part2:: "<<base68<<"\n";
+    cout<<"Part2:: "<<base68<<"\n";  // 5EQHr1v#E
 }
 
 void part3(vector<pair<string, int>>arr) {
