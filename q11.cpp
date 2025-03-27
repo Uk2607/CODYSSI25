@@ -86,16 +86,21 @@ string bas10_to_base68(long long num) {
 
 void part2(vector<pair<string, int>>arr) {
     ll sum = 0LL;
-    for(auto [num, base]: arr) {
-        ll x = to_base10(num, base);
-        sum += x;
-    }
+    for(auto [num, base]: arr)
+        sum += to_base10(num, base);
     string base68 = bas10_to_base68(sum);
     cout<<"Part2:: "<<base68<<"\n";  // 5EQHr1v#E
 }
 
 void part3(vector<pair<string, int>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+    int base_length = 4;
+    ll sum = 0LL;
+    for(auto [num, base]: arr)
+        sum += to_base10(num, base);
+    int base = 2;
+    while (pow(base, 4) <= sum)
+        base++;
+    cout<<"Part3:: "<<base<<"\n";
 }
 
 int main() {
@@ -105,3 +110,7 @@ int main() {
     part3(arr);
     return 0;
 }
+
+// Part 1: 9990415554294
+// Part 2: 5!Ubu3aBR
+// Part 3: 7213
