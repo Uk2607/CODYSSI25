@@ -173,7 +173,43 @@ void part2(vector<vector<int>>arr, vector<vector<string>>ins, vector<string>opt)
 }
 
 void part3(vector<vector<int>>arr, vector<vector<string>>ins, vector<string>opt) {
-    cout<<"Part3:: "<<""<<"\n";
+    vector<string>curr_ins;
+    int n = opt.size(), i=0;
+    while(!ins.empty()) {
+        string action = opt[i];
+        if(action == "TAKE") {
+            curr_ins = ins[0];
+        } else if(action == "CYCLE") {
+            ins.erase(ins.begin());
+            ins.push_back(curr_ins);
+        } else {
+            ins.erase(ins.begin());
+            if(curr_ins[0]=="SHIFT") {
+                shiftMatrix(arr, stoi(curr_ins[2])-1, stoi(curr_ins[4]), curr_ins[1]);
+            } else {
+                if(curr_ins.size()==3) {
+                    updateMatrix(arr, curr_ins[0], curr_ins[2], stoi(curr_ins[1]));
+                } else {
+                    updateMatrix(arr, curr_ins[0], curr_ins[2], stoi(curr_ins[1]), stoi(curr_ins[3]));
+                }
+            }
+        }
+        i = (i+1)%n;
+    }
+    int r = arr.size(), c = arr[0].size();    
+    vector<ll> rowSums(r, 0), colSums(c, 0);
+
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            rowSums[i] += arr[i][j];
+            colSums[j] += arr[i][j];
+        }
+    }
+    
+    ll mx = LLONG_MIN;
+    for (ll sum : rowSums) if (sum > mx) mx = sum;
+    for (ll sum : colSums) if (sum > mx) mx = sum;
+    cout<<"Part3:: "<<mx<<"\n";
 }
 
 int main() {
@@ -186,3 +222,7 @@ int main() {
     part3(arr, ins, opt);
     return 0;
 }
+
+// Part 1: 19295074900
+// Part 2: 153905668
+// Part 3: 20584965034
