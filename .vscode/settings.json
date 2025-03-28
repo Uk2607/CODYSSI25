@@ -3,6 +3,7 @@
         "vector": "cpp",
         "iostream": "cpp",
         "queue": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "tuple": "cpp"
     }
 }

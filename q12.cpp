@@ -77,7 +77,7 @@ void updateMatrix(vector<vector<int>>& matrix, const string& op, const string& d
         for(vector<int>&row: matrix) {
             for(int &x: row) {
                 if(op=="ADD") x+=amnt;
-                else if(op=="SUB") x+=amnt;
+                else if(op=="SUB") x-=amnt;
                 else x *= amnt;
                 while(x<L) x+=C;
                 while(x>R) x-=C;
@@ -87,7 +87,7 @@ void updateMatrix(vector<vector<int>>& matrix, const string& op, const string& d
     else if(dir=="ROW") {
         for(int &x: matrix[idx-1]) {
             if(op=="ADD") x+=amnt;
-            else if(op=="SUB") x+=amnt;
+            else if(op=="SUB") x-=amnt;
             else x *= amnt;
             while(x<L) x+=C;
             while(x>R) x-=C;
@@ -97,7 +97,7 @@ void updateMatrix(vector<vector<int>>& matrix, const string& op, const string& d
         for(int i=0;i<matrix.size();i++) {
             int x = matrix[i][idx-1];
             if(op=="ADD") x+=amnt;
-            else if(op=="SUB") x+=amnt;
+            else if(op=="SUB") x-=amnt;
             else x *= amnt;
             while(x<L) x+=C;
             while(x>R) x-=C;
@@ -120,18 +120,19 @@ void part1(vector<vector<int>>arr, vector<vector<string>>ins, vector<string>opt)
     }
     
     int r = arr.size(), c = arr[0].size();    
-    vector<int> rowSums(r, 0), colSums(c, 0);
+    vector<ll> rowSums(r, 0), colSums(c, 0);
 
-    for (int i = 0; i < r; i++)
+    for (int i = 0; i < r; i++) {
         for (int j = 0; j < c; j++) {
             rowSums[i] += arr[i][j];
             colSums[j] += arr[i][j];
         }
+    }
     
-    int mx = INT_MIN;
-    for (int sum : rowSums) if (sum > mx) mx = sum;
-    for (int sum : colSums) if (sum > mx) mx = sum;
-    cout<<"Part1:: "<<mx<<"\n";
+    ll mx = LLONG_MIN;
+    for (ll sum : rowSums) if (sum > mx) mx = sum;
+    for (ll sum : colSums) if (sum > mx) mx = sum;
+    cout<<"Part1:: "<<mx<<"\n";  // 2115205716
 }
 
 void part2(vector<vector<int>>arr, vector<vector<string>>ins, vector<string>opt) {
