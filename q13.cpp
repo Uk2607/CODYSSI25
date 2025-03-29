@@ -110,45 +110,35 @@ void part2(vector<pair<pair<string,string>, int>>arr) {
     cout << "Part2:: " << product << "\n";
 }
 
-void dfs(const string& node, const string& startNode, const map<string, vector<pair<string, int>>>& graph,
-         unordered_set<string>& visited, unordered_set<string>& currentPath,
+void dfs(const string& node, const string& startNode, const map<string, vector<pair<string, int>>>& graph,unordered_set<string>& visited, unordered_set<string>& currentPath,
          int currentCost, int& longestCycle) {
-    // If we revisit the starting node and the path length is greater than 1, we found a cycle
     if (currentPath.count(node) && node == startNode) {
-        // Update the longest cycle cost if the cycle is valid
         longestCycle = max(longestCycle, currentCost);
         return;
     }
 
-    // If the node has already been visited in a different path, return
-    if (visited.count(node)) {
-        return;
-    }
+    if (visited.count(node)) return;
 
     // Mark the node as visited and add it to the current path
     visited.insert(node);
     currentPath.insert(node);
 
-    // Explore all neighbors if the node exists in the graph
-    if (graph.find(node) != graph.end()) {
-        for (const auto& neighbor : graph.at(node)) {
+    if (graph.find(node) != graph.end())
+        for (const auto& neighbor : graph.at(node))
             dfs(neighbor.first, startNode, graph, visited, currentPath, currentCost + neighbor.second, longestCycle);
-        }
-    }
 
-    // Backtrack: remove the node from the current path
+    // Backtrack: remove the nodes
     currentPath.erase(node);
     visited.erase(node);
 }
 
 int longestCycle(const map<string, vector<pair<string, int>>>& graph) {
     int longestCycle = 0;
+    unordered_set<string> visited;
 
     for (const auto& entry : graph) {
         const string& node = entry.first;
         unordered_set<string> currentPath; // To track the current path
-        unordered_set<string> visited;
-
         dfs(node, node, graph, visited, currentPath, 0, longestCycle);
     }
 
