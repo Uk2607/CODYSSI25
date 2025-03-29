@@ -3,6 +3,8 @@
 #include<sstream>
 #include<string>
 #include<map>
+#include<set>
+#include <unordered_set>
 using namespace std;
 
 #define ll long long
@@ -73,22 +75,16 @@ void part1(vector<pair<pair<string,string>, int>>arr) {
     
     map<string, int>distances = dij(mp, start);
 
-    // Collect distances and find the three longest paths
     vector<int> lengths;
-    for (const auto& entry : distances) {
-        if (entry.second != numeric_limits<int>::max() && entry.first != start) {
+    for (const auto& entry : distances)
+        if (entry.second != numeric_limits<int>::max() && entry.first != start)
             lengths.push_back(entry.second);
-        }
-    }
 
-    // Sort lengths in descending order
     sort(lengths.rbegin(), lengths.rend());
 
-    // Calculate the product of the lengths of the 3 longest paths
     int product = 1;
-    for (int i = 0; i < 3 && i < lengths.size(); ++i) {
+    for (int i = 0; i < 3 && i < lengths.size(); ++i)
         product *= lengths[i];
-    }
 
     cout << "Part1:: " << product << "\n";
 }
@@ -97,32 +93,81 @@ void part2(vector<pair<pair<string,string>, int>>arr) {
     string start = "STT";
     map<string, vector<pair<string,int>>>mp;
     for(pair<pair<string,string>, int>p: arr)
-        mp[p.first.first].push_back({p.first.second, p.second});  // Using path length 1 for part 1
+        mp[p.first.first].push_back({p.first.second, p.second});
     
     map<string, int>distances = dij(mp, start);
 
-    // Collect distances and find the three longest paths
     vector<int> lengths;
-    for (const auto& entry : distances) {
-        if (entry.second != numeric_limits<int>::max() && entry.first != start) {
+    for (const auto& entry : distances)
+        if (entry.second != numeric_limits<int>::max() && entry.first != start)
             lengths.push_back(entry.second);
-        }
-    }
 
-    // Sort lengths in descending order
     sort(lengths.rbegin(), lengths.rend());
 
-    // Calculate the product of the lengths of the 3 longest paths
     int product = 1;
-    for (int i = 0; i < 3 && i < lengths.size(); ++i) {
-        product *= lengths[i];
-    }
+    for (int i = 0; i < 3 && i < lengths.size(); ++i) product *= lengths[i];
 
     cout << "Part2:: " << product << "\n";
 }
 
-void part3(vector<pair<pair<string,string>, int>>arr) {
-    cout<<"Part3:: "<<""<<"\n";
+void dfs(const string& node, const string& startNode, const map<string, vector<pair<string, int>>>& graph,
+         unordered_set<string>& visited, unordered_set<string>& currentPath,
+         int currentCost, int& longestCycle, map<string, int>& pathCost) {
+    // If we revisit the starting node and the path length is greater than 1, we found a cycle
+    if (currentPath.count(node) && node == startNode) {
+        // Update the longest cycle cost if the cycle is valid
+        longestCycle = max(longestCycle, currentCost);
+        return;
+    }
+
+    // If the node has already been visited in a different path, return
+    if (visited.count(node)) {
+        return;
+    }
+
+    // Mark the node as visited and add it to the current path
+    visited.insert(node);
+    currentPath.insert(node);
+    pathCost[node] = currentCost; // Store the cost to reach this node
+
+    // Explore all neighbors if the node exists in the graph
+    if (graph.find(node) != graph.end()) {
+        for (const auto& neighbor : graph.at(node)) {
+            dfs(neighbor.first, startNode, graph, visited, currentPath, currentCost + neighbor.second, longestCycle, pathCost);
+        }
+    }
+
+    // Backtrack: remove the node from the current path
+    currentPath.erase(node);
+    pathCost.erase(node); // Remove the cost for backtracking
+}
+
+int longestCycle(const map<string, vector<pair<string, int>>>& graph) {
+    int longestCycle = 0;
+    unordered_set<string> visited;
+
+    // Perform DFS from each node
+    for (const auto& entry : graph) {
+        const string& node = entry.first;
+        unordered_set<string> currentPath; // To track the current path
+        map<string, int> pathCost; // To track the cost to reach each node
+
+        // Start DFS from the current node
+        dfs(node, node, graph, visited, currentPath, 0, longestCycle, pathCost);
+    }
+
+    return longestCycle;
+}
+
+void part3(vector<pair<pair<string, string>, int>> arr) {
+    map<string, vector<pair<string, int>>> graph;
+
+    for (const auto& p : arr)
+        graph[p.first.first].push_back({p.first.second, p.second});
+
+    int longest_cycle_length = longestCycle(graph);
+
+    cout << "Part3:: " << longest_cycle_length << "\n";
 }
 
 int main() {
