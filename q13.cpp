@@ -8,11 +8,11 @@ using namespace std;
 #define ull unsigned long long
 
 
-vector<string> get_input(string day) {
+vector<pair<pair<string,string>, int>> get_input(string day) {
     string file_path = "ip/"+day+".in";
     ifstream file(file_path);
 
-    vector<string>arr;
+    vector<pair<pair<string,string>, int>>arr;
     string line;
 
     if (!file.is_open()) {
@@ -20,26 +20,30 @@ vector<string> get_input(string day) {
         return arr;
     }
     while(getline(file, line)) {
-        arr.push_back(line);
+        stringstream ss(line);
+        string a, b, t;
+        int x;
+        ss>>a>>t>>b>>t>>x;
+        arr.push_back({{a, b}, x});
     }
     file.close();
     return arr;
 }
 
-void part1(vector<string>arr) {
+void part1(vector<pair<pair<string,string>, int>>arr) {
     cout<<"Part1:: "<<""<<"\n";
 }
 
-void part2(vector<string>arr) {
+void part2(vector<pair<pair<string,string>, int>>arr) {
     cout<<"Part2:: "<<""<<"\n";
 }
 
-void part3(vector<string>arr) {
+void part3(vector<pair<pair<string,string>, int>>arr) {
     cout<<"Part3:: "<<""<<"\n";
 }
 
 int main() {
-    vector<string>arr = get_input("XX");
+    vector<pair<pair<string,string>, int>>arr = get_input("13");
     part1(arr);
     part2(arr);
     part3(arr);
