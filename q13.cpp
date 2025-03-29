@@ -112,7 +112,7 @@ void part2(vector<pair<pair<string,string>, int>>arr) {
 
 void dfs(const string& node, const string& startNode, const map<string, vector<pair<string, int>>>& graph,
          unordered_set<string>& visited, unordered_set<string>& currentPath,
-         int currentCost, int& longestCycle, map<string, int>& pathCost) {
+         int currentCost, int& longestCycle) {
     // If we revisit the starting node and the path length is greater than 1, we found a cycle
     if (currentPath.count(node) && node == startNode) {
         // Update the longest cycle cost if the cycle is valid
@@ -128,32 +128,28 @@ void dfs(const string& node, const string& startNode, const map<string, vector<p
     // Mark the node as visited and add it to the current path
     visited.insert(node);
     currentPath.insert(node);
-    pathCost[node] = currentCost; // Store the cost to reach this node
 
     // Explore all neighbors if the node exists in the graph
     if (graph.find(node) != graph.end()) {
         for (const auto& neighbor : graph.at(node)) {
-            dfs(neighbor.first, startNode, graph, visited, currentPath, currentCost + neighbor.second, longestCycle, pathCost);
+            dfs(neighbor.first, startNode, graph, visited, currentPath, currentCost + neighbor.second, longestCycle);
         }
     }
 
     // Backtrack: remove the node from the current path
     currentPath.erase(node);
-    pathCost.erase(node); // Remove the cost for backtracking
+    visited.erase(node);
 }
 
 int longestCycle(const map<string, vector<pair<string, int>>>& graph) {
     int longestCycle = 0;
-    unordered_set<string> visited;
 
-    // Perform DFS from each node
     for (const auto& entry : graph) {
         const string& node = entry.first;
         unordered_set<string> currentPath; // To track the current path
-        map<string, int> pathCost; // To track the cost to reach each node
+        unordered_set<string> visited;
 
-        // Start DFS from the current node
-        dfs(node, node, graph, visited, currentPath, 0, longestCycle, pathCost);
+        dfs(node, node, graph, visited, currentPath, 0, longestCycle);
     }
 
     return longestCycle;
@@ -161,12 +157,9 @@ int longestCycle(const map<string, vector<pair<string, int>>>& graph) {
 
 void part3(vector<pair<pair<string, string>, int>> arr) {
     map<string, vector<pair<string, int>>> graph;
-
-    for (const auto& p : arr)
-        graph[p.first.first].push_back({p.first.second, p.second});
+    for (const auto& p : arr) graph[p.first.first].push_back({p.first.second, p.second});
 
     int longest_cycle_length = longestCycle(graph);
-
     cout << "Part3:: " << longest_cycle_length << "\n";
 }
 
@@ -175,5 +168,10 @@ int main() {
     part1(arr);
     part2(arr);
     part3(arr);
+
     return 0;
 }
+
+// Part 1: 3600
+// Part 2: 3557250
+// Part 3: 265
